@@ -1,0 +1,19 @@
+
+<div class="main-table">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @products.each do |product| %>
+        <tr>
+          <td><%= product.name %></td>
+          <td><%= product.price %></td>
+        </tr>
+     <% end %>
+   </tbody>
+  </table>
+</div>
