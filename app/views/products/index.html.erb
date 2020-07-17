@@ -1,11 +1,38 @@
-<div class="container-fluid">
+
+<div class="container-fluid py-5 fixed-top bg-light">
   <div class="row">
-    <div class="col">.col</div>
+    <div class="col">
+      <%= link_to 'Refresh Data', products_path, method: :delete, data: {confirm: "Do you want to refresh all the data?"} %>
+
+    </div>
+    <div class="col-8">
+
+      <%= simple_form_for(:search, 
+                        url: root_path, 
+                        method: :get, 
+                        html: {class:'justify-content-center'}) do |f| %>
+      <%= f.input(:name,
+                  :required => false,
+                  :label => false,
+                  input_html: {value: "",
+                  class:'form-control form-control-lg ml-3', placeholder:'Search'}) %>
+      <% end %>
+    </div>
+    <div class="col">
+
+    </div>
+  </div>
+</div>
+
+
+<<div class="container-fluid" style="margin-top:160px">
+  <div class="row">
+    <div class="col"></div>
     <div class="col-8">
       <%= render 'item_display' %>
     </div>
-    <div class="col">.col</div>
+    <div class="col"></div>
   </div>
-</div>
+</div> 
 
 

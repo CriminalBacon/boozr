@@ -41,8 +41,12 @@ gem 'rest-client', '~> 2.1'
 gem 'bootstrap', '~> 4.5'
 gem 'jquery-rails'
 
+gem 'font-awesome-rails', '~> 4.7', '>= 4.7.0.5'
+
 gem 'mechanize', '~> 2.7', '>= 2.7.6'
 gem 'nokogiri', '~> 1.10', '>= 1.10.10'
+
+gem 'simple_form', '~> 5.0', '>= 5.0.2'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

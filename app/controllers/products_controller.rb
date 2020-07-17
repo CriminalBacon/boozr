@@ -1,10 +1,18 @@
+require 'tesco'
+require 'sainsburys'
+
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :set_product, only: [:show]
 
   # GET /products
   # GET /products.json
   def index
-    @products = Product.all
+    @products = Product.all.order(:name)
+    @search = params['search']
+    if @search.present?
+      @name = @search['name']
+      @products = Product.where('name LIKE ?', "%#{@name}%").order(:name)
+    end
   end
 
   # GET /products/1
@@ -54,11 +62,33 @@ class ProductsController < ApplicationController
   # DELETE /products/1
   # DELETE /products/1.json
   def destroy
-    @product.destroy
-    respond_to do |format|
-      format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
-      format.json { head :no_content }
+    # @product.destroy
+    # respond_to do |format|
+    #   format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
+    #   format.json { head :no_content }
+      # end
+    Product.delete_all
+
+
+    tesco = TescoScraper.new
+    sainsburys = SainsburyScraper.new
+
+    s_p_and_p = sainsburys.get_products_and_prices
+    s_p_and_p.each do |name, price|
+      Product.create(store: 'S', name: name, price: price)
     end
+
+    t_p_and_p = tesco.get_products_and_prices
+    t_p_and_p.each do |name, price|
+      Product.create(store: 'T', name: name, price: price)
+    end
+    
+    redirect_to root_path
+
+  end
+
+  def delete_all_data
+    Product.delete_all
   end
 
   private
@@ -69,6 +99,7 @@ class ProductsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def product_params
-      params.fetch(:product, {})
+      # params.fetch(:product, {})
+      params.require(:product).permit(:name, :search)
     end
 end
