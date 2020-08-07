@@ -69,7 +69,6 @@ class ProductsController < ApplicationController
       # end
     Product.delete_all
 
-
     tesco = TescoScraper.new
     sainsburys = SainsburyScraper.new
 
@@ -85,10 +84,6 @@ class ProductsController < ApplicationController
     
     redirect_to root_path
 
-  end
-
-  def delete_all_data
-    Product.delete_all
   end
 
   private
